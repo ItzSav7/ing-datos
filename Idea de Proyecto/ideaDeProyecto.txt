@@ -1,0 +1,9 @@
+Idea del proyecto de INGENIERÍA DE DATOS. 
+Cliente: Administradora de una fundación sin ánimo de lucro. ProHijar.
+
+Sitio web del cliente: https://www.prohijar.org
+
+Necesidad: Al ser esta una fundación sin ánimo de lucro, esta funciona principalmente a través de donaciones. Ellos necesitan una forma eficiente de llevar cuenta de estos donantes que son tan esenciales para su funcionamiento.
+Actualmente SÍ cuentan con una 'base de datos' de donantes (es un excel) que contiene datos sensibles de todas las personas naturales y jurídicas que aportaron (nombre, documento, cuanto aportó, etc.)
+
+Eso es prácticamente todo.
