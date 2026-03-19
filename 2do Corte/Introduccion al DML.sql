@@ -110,3 +110,21 @@ delete from clientes where idCliente = 2;
 
 insert into clientes (idcliente, nombreCliente, emailCliente, ciudad) values ('Padre','padre@cielo.net')
 -- ay dios mio
+
+/*
+INSERT
+
+1. Inserta 3 clientes nuevos con nombre, email y ciudad
+2. Inserta 2 productos con nombre, precio, stock y categoría
+3. Inserta 1 pedido vinculando un cliente y un producto recién creados
+
+UPDATE
+4. Cambia la ciudad de uno de tus clientes insertados
+5. Aumenta en 5 unidades el stock de uno de tus productos
+6. Modifica el precio del segundo producto aplicando un descuento del 10%
+
+DELETE
+7. Elimina el pedido que creaste en el punto 3
+8. Elimina el cliente cuya ciudad cambiaste en el punto 4
+9. Elimina todos los productos con stock menor a 3
+*/
