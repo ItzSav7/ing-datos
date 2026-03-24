@@ -12,15 +12,17 @@ Ok, como en la clase virtual estábamos hablando del método `now()` para _datet
 #### Numéricos
 1. ABS() - Valor absoluto
 2. CEIL() - Función techo. Definición formal (muy necesario)
-$$\lceil x \rceil = ceil(x) = mín\{ n \in \mathbb{Z} | n \ge x \}$$
-3. Todas las trigonométricas - (SIN(), COS(), TAN(), COT(), ACOS(), ASIN(), ATAN())
-4. FLOOR() - Función piso. Definición trivial.
-5. PI() - No adivinarás
-6. POW(a) - $x^a$ 
-7. ROUND() - Redondear
-8. SQRT() - $\sqrt{x}$
-9. MOD() - Módulo aka residup
-10. TRUNCATE() - Truncar a número especificado de decimales
+
+$$\lceil x \rceil = ceil(x) = mín \\{ n \in \mathbb{Z} | n \ge x \\}$$
+
+4. Todas las trigonométricas - $sin()\text{,} cos()\text{,} tan()\text{,} cot()\text{,} acos()\text{,} asin()\text{,} atan()$
+5. FLOOR() - Función piso. Definición trivial.
+6. PI() - No adivinarás
+7. POW(a) - $x^a$ 
+8. ROUND() - Redondear
+9. SQRT() - $\sqrt{x}$
+10. MOD() - Módulo aka residup
+11. TRUNCATE() - Truncar a número especificado de decimales
 
 Existen muchas más. Consultarlas en [MySQL Documentation](https://dev.mysql.com/doc/refman/9.6/en/numeric-functions.html)
 
