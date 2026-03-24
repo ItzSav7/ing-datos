@@ -12,7 +12,7 @@ Ok, como en la clase virtual estábamos hablando del método `now()` para _datet
 #### Numéricos
 1. ABS() - Valor absoluto
 2. CEIL() - Función techo. Definición formal (muy necesario)
-$ \lceil x \rceil = ceil(x) = mín\{ n \in \mathbb{Z} | n \ge x \}$
+$$\lceil x \rceil = ceil(x) = mín\{ n \in \mathbb{Z} | n \ge x \}$$
 3. Todas las trigonométricas - (SIN(), COS(), TAN(), COT(), ACOS(), ASIN(), ATAN())
 4. FLOOR() - Función piso. Definición trivial.
 5. PI() - No adivinarás
