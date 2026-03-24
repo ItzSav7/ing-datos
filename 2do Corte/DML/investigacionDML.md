@@ -17,11 +17,11 @@ $$\lceil x \rceil = ceil(x) = mín \\{ n \in \mathbb{Z} | n \ge x \\}$$
 
 4. Todas las trigonométricas - $sin()\text{, } cos()\text{, } tan()\text{, } cot()\text{, } acos()\text{, } asin()\text{, } atan()$
 5. FLOOR() - Función piso. Definición trivial.
-6. PI() - No adivinarás
+6. PI() - No adivinarás ($\pi$)
 7. POW(a) - $x^a$ 
 8. ROUND() - Redondear
 9. SQRT() - $\sqrt{x}$
-10. MOD() - Módulo aka residup
+10. MOD() - Módulo aka residuo
 11. TRUNCATE() - Truncar a número especificado de decimales
 
 Existen muchas más. Consultarlas en [MySQL Documentation](https://dev.mysql.com/doc/refman/9.6/en/numeric-functions.html)
