@@ -15,7 +15,7 @@ Ok, como en la clase virtual estábamos hablando del método `now()` para _datet
 
 $$\lceil x \rceil = ceil(x) = mín \\{ n \in \mathbb{Z} | n \ge x \\}$$
 
-4. Todas las trigonométricas - $sin()\text{,} cos()\text{,} tan()\text{,} cot()\text{,} acos()\text{,} asin()\text{,} atan()$
+4. Todas las trigonométricas - $sin()\text{, } cos()\text{, } tan()\text{, } cot()\text{, } acos()\text{, } asin()\text{, } atan()$
 5. FLOOR() - Función piso. Definición trivial.
 6. PI() - No adivinarás
 7. POW(a) - $x^a$ 
