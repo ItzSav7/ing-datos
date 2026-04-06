@@ -208,8 +208,9 @@ from productos;
 select concat(nombreCliente,' aka ',emailCliente) as 'Concatenación nombre con email',
 UPPER(nombreCliente) as 'NOMBRE PERO GRITADO', 
 concat(UPPER(nombreCliente),' i cant do this anymore ',emailCliente) as 'Concatenación NOMBRE con email',
-length(nombreCliente) as 'Tamaño Nombre'
-from clientes;
+length(nombreCliente) as Tamanio
+from clientes
+order by Tamanio DESC;
 
 /*SUBCONSULTAS - Anidadas*/
 # Ej: Consultar los clientes que realizaron 2 pedidos de un producto cuyo precio sea mayor a 100000
