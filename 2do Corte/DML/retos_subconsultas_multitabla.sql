@@ -1,4 +1,5 @@
 # Autor: Santiago Velandia
+# Versión 2. Actualización el 07 de abril para añadir las consultas de la tarea.
 
 /*Los más plays de bases de datos - SubQuerys
 
@@ -85,15 +86,35 @@ where prom_salario > 900000; # Se usa esa tabla derivada para solo mostrar algun
 # select * from empleados;
 
 # Consulta toda rara anidada
-# Esto solo muestra un registro :(
+# Ya debería estar arreglada
 select nombreEmpleado, salarioEmpleado, prom_salario, diferencia
 from
 	(select nombreEmpleado, salarioEmpleado, prom_salario, abs(salarioEmpleado - prom_salario) as diferencia
     from 
-		(select nombreEmpleado, salarioEmpleado, avg(salarioEmpleado) as prom_salario
-		from empleados) as diferencia_salario
-    ) as promedio_general;
+		(select nombreEmpleado, salarioEmpleado, (select avg(salarioEmpleado) from empleados) as prom_salario
+		from empleados) as promedio_general
+    ) as diferencia_salario;
     
 # Subconsulta que muestre la categoría de los productos y los precios máximos de los productos
 # Pero va a mostrar el producto cuyo precio sea mayor que el promedio
 # Organizado por precio
+
+# Ok no estoy seguro si la idea era mostrar los productos cuyo precio fuera mayor al promedio total o al promedio de su categoria... así que hice las dos?? creo
+
+# En general
+select nombreProducto, precioProducto, categoriaProducto
+from producto
+where precioProducto > 
+    (select AVG(precioProducto) from producto)
+order by precioProducto DESC;
+
+# Por categoría aunque creo que esta no funciona bien :/
+select nombreProducto, precioProducto, categoriaProducto, promedioCategoria
+from 
+  (select nombreProducto, precioProducto, categoriaProducto, promedioCategoria
+  from (select nombreProducto, precioProducto, categoriaProducto, avg(precioProducto) as promedioCategoria 
+        from producto 
+        group by categoriaproducto))
+group by categoriaproducto
+having precioproducto >= promedioCategoria
+order by precioproducto DESC;
