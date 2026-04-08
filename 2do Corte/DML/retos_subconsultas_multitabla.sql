@@ -43,6 +43,8 @@ create table departamento(
     nombreDepto varchar(50) not null
 );
 
+# Reto 2
+
 insert into departamento (nombreDepto) values ('Limpieza'), ('Tesorería'), ('Legal');
 insert into empleados (nombreEmpleado, idDeptoFK, salarioEmpleado) values ('Sara Martínez', 2, 1750905),
 ('Maria José Árias', 3, 1750905),
@@ -83,8 +85,6 @@ from
     group by idDeptoFK) as promedios # Se crea una tabla promedios de la consulta del promedio de salarios de la tabla departamento
 where prom_salario > 900000; # Se usa esa tabla derivada para solo mostrar algunos
 
-# select * from empleados;
-
 # Consulta toda rara anidada
 # Ya debería estar arreglada
 select nombreEmpleado, salarioEmpleado, prom_salario, diferencia
@@ -98,23 +98,8 @@ from
 # Subconsulta que muestre la categoría de los productos y los precios máximos de los productos
 # Pero va a mostrar el producto cuyo precio sea mayor que el promedio
 # Organizado por precio
-
-# Ok no estoy seguro si la idea era mostrar los productos cuyo precio fuera mayor al promedio total o al promedio de su categoria... así que hice las dos?? creo
-
-# En general
 select nombreProducto, precioProducto, categoriaProducto
 from producto
 where precioProducto > 
     (select AVG(precioProducto) from producto)
 order by precioProducto DESC;
-
-# Por categoría aunque creo que esta no funciona bien :/
-select nombreProducto, precioProducto, categoriaProducto, promedioCategoria
-from 
-  (select nombreProducto, precioProducto, categoriaProducto, promedioCategoria
-  from (select nombreProducto, precioProducto, categoriaProducto, avg(precioProducto) as promedioCategoria 
-        from producto 
-        group by categoriaproducto))
-group by categoriaproducto
-having precioproducto >= promedioCategoria
-order by precioproducto DESC;
