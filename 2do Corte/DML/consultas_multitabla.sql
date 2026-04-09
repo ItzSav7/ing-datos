@@ -1,5 +1,9 @@
-# Autor: Santiago Velandia
-# Versión 2. Actualización el 07 de abril para añadir las consultas de la tarea.
+/*-----------------------------------
+Autor: Santiago Velandia
+Versión 4. 
+Actualización el 09 de abril para añadir las consultas multitabla de la tarea.
+Este script también funciona como notas de clase que tomo.
+-----------------------------------*/
 
 /*Los más plays de bases de datos - SubQuerys
 
@@ -140,7 +144,6 @@ from pedido p # tabla de la izquierda
 inner join empleados e on p.idEmpleadoFK = e.idEmpleado # tabla de la derecha
 order by p.fechaPedido desc;
 
-
 select e.idEmpleado, count(p.idPedido) as totalPedidos,e.nombreEmpleado as cliente, p.fechaPedido
 from empleados e # tabla de la izquierda
 left join pedido p on e.idEmpleado = p.idEmpleadoFK # tabla de la derecha
@@ -148,4 +151,16 @@ order by p.fechaPedido desc;
 
 select * from pedido;
 
-# Mostrar el detalle completo de los pedidos: cliente, que pedido tiene y que productos compró (que productos tiene el pedido). Solo los que tengan pedido.
+/* TAREA: Mostrar el detalle completo de los pedidos: empleado, que pedidos tiene, que productos tiene el pedido.
+(Solo los que tengan pedido).
+(Algo raro tendré que hacer con detallePedido pero i'll figure it out)*/
+select 	e.nombreEmpleado as Empleado,
+		p.idPedido as Pedido,
+		p.fechaPedido as Fecha,
+		pr.nombreProducto as Producto,
+		pr.precioProducto as Precio
+from empleados e
+inner join pedido p on e.idEmpleado = p.idEmpleadoFK
+inner join detallepedido dp on p.idPedido = dp.idPedidoFK
+inner join producto pr on dp.idProductoFK = pr.idProducto
+order by e.idEmpleado asc, p.idPedido asc;
