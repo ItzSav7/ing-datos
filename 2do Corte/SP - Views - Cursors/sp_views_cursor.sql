@@ -295,4 +295,27 @@ END //
 DELIMITER ;
 
 /*TAREA 2: Convertir los dos SPs anteriores (crearPedido y cancelarPedido) en vistas*/
+/*OK, investigué y las vistas NO pueden tener lógica transaccional (no pueden hacer UPDATE o similares) si involucran más de 2 tablas.
+Lo cual es el caso para ambos SPs.
+Entonces, haré una vista para la visualización de todos los pedidos, para verificar los cambios hechos por los SPs.*/
+CREATE VIEW detalle_completo AS
+select
+c.nombreCliente as Cliente,
+p.idPedido,
+p.estadoPedido,
+pr.nombreProducto as Producto,
+ca.nombreCategoria as Categoria,
+dp.cantidad as Cantidad,
+dp.precioUnit,
+(dp.cantidad*dp.precioUnit) as Subtotal
+from cliente c
+inner join pedido p on c.idCliente=p.idClienteFK
+inner join detalle_pedido dp on p.idPedido=dp.idPedidoFK
+inner join producto pr on dp.idProductoFK=pr.idProducto
+inner join categoria ca on pr.idCategoriaFK = ca.idCategoria
+order by c.nombreCliente, p.idPedido;
+
+# Y ahora se puede ver el detalle completo de los pedidos usando únicamente esta línea y no el reguero de antes completo :)
+SELECT * FROM detalle_completo;
+
 
