@@ -318,7 +318,36 @@ order by c.nombreCliente, p.idPedido;
 # Y ahora se puede ver el detalle completo de los pedidos usando únicamente esta línea y no el reguero de antes completo :)
 SELECT * FROM detalle_completo;
 
-/*FUNCIONES*/
+/*FUNCIONES
+Definición: Siempre van a retornar un valor y se usan directamente dentro del SELECT con un WHERE
+NO puede modificar fatos (insert, update, delete)
+
+Sintaxis:
+DELIMITER //
+CREATE FUNCTION {nombre_function}(
+	{parámetro 1} tipo,
+	{parámetro 2} tipo,
+	...
+	{parámetro n} tipo
+)
+RETURNS {tipo_de_retorno}
+DETERMINISTIC
+NOW(), RAND()
+READS SQL DATA
+{tablas}
+BEGIN
+	DECLARE {variable} {tipo_de_variable}
+
+	lógica....
+
+	RETURN {variable}
+END //
+DELIMITER ;
+
+FUNCIONES DETERMINISTAS: Usan cosas de la base de datos
+FUNCIONES NO DETERMINISTAS: No lo hacen
+
+*/
 DELIMITER //
 CREATE FUNCTION fn_descuento_volumen(
 	p_cantidad int, 
