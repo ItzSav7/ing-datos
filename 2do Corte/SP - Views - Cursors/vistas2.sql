@@ -421,9 +421,9 @@ BEGIN
     
     # ESTO ESTÁ MAL: CALCULA EL TOTAL DE PEDIDOS DE TODOS Y NO POR CLIENTE
     # ARREGLAR LUEGO
-    SELECT COUNT(p.idPedido) INTO v_cantidadPedidos
+    SELECT COUNT(*) INTO v_cantidadPedidos
     FROM pedido p
-    RIGHT JOIN cliente c ON p.idClienteFK = c.idCliente; # PRIMERA VEZ EN MI VIDA QUE USO RIGHT JOIN :D
+    WHERE p.idClienteFK = p_idCliente;
     
     SET v_clasificacionCliente = case
 		WHEN v_cantidadPedidos >= 5 THEN 'M.V.P+'
@@ -431,6 +431,7 @@ BEGIN
 		WHEN v_cantidadPedidos >= 2 THEN 'V.I.P'
         WHEN v_cantidadPedidos >= 1 THEN 'Regular'
         WHEN v_cantidadPedidos = 0 THEN 'No es comprador'
+		ELSE 'No ha comprado'
 	END;
     
     RETURN v_clasificacionCliente;
