@@ -248,24 +248,258 @@ CREATE PROCEDURE sp_actualizar_estado_pedido(
 	OUT p_mensaje VARCHAR(100)
 )
 BEGIN
-	DECLARE v_estado VARCHAR(20);
-	DECLARE v_pedido_id INT;
+	DECLARE v_estado_viejo VARCHAR(20);
+    DECLARE v_cantidad INT;
+    DECLARE v_producto_id INT;
 	
 	DECLARE EXIT HANDLER FOR SQLEXCEPTION
     BEGIN
         ROLLBACK;
         SET p_mensaje = 'Error detectado: transacción revertida';
-        SET p_idPedido = -1; # placeholder
     END;
 
-	SELECT pedido_id INTO v_pedido_id
+	# (a) Verifique que el pedido exista (si no, retorne mensaje de error).
+	SELECT estado, cantidad, producto_id INTO v_estado_viejo, v_cantidad, v_producto_id
 	FROM pedidos WHERE pedido_id = p_pedido_id;
 
-	IF v_pedido_id IS NULL THEN
+	IF v_estado_viejo IS NULL THEN
 		SET p_mensaje = 'Error: Pedido no encontrado :/';
+	ELSE
+		START TRANSACTION;
+        
+        # (b) Inserte un registro en log_cambios_estado con el estado anterior y el nuevo.
+		INSERT INTO log_cambios_estado (pedido_id, estado_anterior, estado_nuevo) 
+		VALUES (p_pedido_id, v_estado_viejo, p_nuevo_estado);
+        
+        # (c) Actualice el estado del pedido.
+        UPDATE pedidos SET estado = p_nuevo_estado WHERE pedido_id = p_pedido_id;
+        
+        # (d) Si el nuevo estado es cancelado, restaure el stock del producto correspondiente.
+        IF p_nuevo_estado = 'cancelado' THEN
+            UPDATE productos SET stock = stock + v_cantidad WHERE producto_id = v_producto_id;
+        END IF;
+        COMMIT;
+        SET p_mensaje = CONCAT('Se cambió el estado del pedido #', p_pedido_id, ' a ',p_nuevo_estado);
 	END IF;
-	--  (log_id PK AI, pedido_id FK, estado_anterior VARCHAR(20), estado_nuevo VARCHAR(20), fecha_cambio DATETIME DEFAULT NOW())
-	INSERT INTO log_cambios_estado (pedido_id) VALUES (p_pedido_id)
-
 END //
 DELIMITER ;
+
+CALL sp_actualizar_estado_pedido(15,'cancelado',@msg);
+SELECT @msg;
+
+select * from log_cambios_estado;
+
+/*11. Cree el procedimiento sp_resumen_cliente(p_cliente_id INT) que ejecute y retorne en un solo SELECT: nombre del cliente, ciudad, total de pedidos por estado
+(use SUM con CASE WHEN para contar pedidos entregados, pendientes y cancelados en columnas separadas) y el ingreso total solo de pedidos entregados.
+Clausula requeridas: CREATE PROCEDURE, SELECT con JOIN, SUM(CASE WHEN ...), GROUP BY
+*/
+DELIMITER //
+CREATE PROCEDURE sp_resumen_cliente(
+	IN p_cliente_id INT
+)
+BEGIN
+    SELECT c.nombre, c.ciudad, 
+		SUM(CASE WHEN estado = 'pendiente' THEN 1 ELSE 0 END) AS pedidos_pendiente,
+		SUM(CASE WHEN estado = 'entregado' THEN 1 ELSE 0 END) AS pedidos_entregado,
+        SUM(CASE WHEN estado = 'cancelado' THEN 1 ELSE 0 END) AS pedidos_cancelado,
+        SUM(CASE WHEN estado = 'entregado' THEN (pr.precio * p.cantidad) ELSE 0 END) AS ingreso_entregados
+	FROM clientes c
+    INNER JOIN pedidos p ON c.cliente_id = p.cliente_id
+    INNER JOIN productos pr ON p.producto_id = pr.producto_id
+    WHERE p.cliente_id = p_cliente_id
+    GROUP BY c.cliente_id; # SUM solo devuelve 1 entonces necesitamos hacer la separación por cliente
+    
+END //
+DELIMITER ;
+
+# Llamarla
+CALL sp_resumen_cliente(8);
+
+/*Los ejercicios del 12 al 15 los hizo Gemini. Los ejercicios 1 al 11 y el 16 los hice yo :)*/
+/*12. Cree la vista vista_pedidos_pendientes que muestre pedido_id, nombre del cliente, nombre del producto, cantidad, precio unitario y dias_espera (DATEDIFF entre CURDATE() y fecha_pedido) para todos los pedidos con estado pendiente. Luego cree el procedimiento sp_alertar_retrasos(p_dias_limite INT) que consulte esa vista y retorne los pedidos cuyo dias_espera supere p_dias_limite.
+Clausula requeridas: CREATE VIEW con JOIN y DATEDIFF, CREATE PROCEDURE con SELECT FROM vista con WHERE
+*/
+-- 1. Crear la vista con JOIN y DATEDIFF
+CREATE OR REPLACE VIEW vista_pedidos_pendientes AS
+SELECT 
+    p.pedido_id, 
+    c.nombre AS nombre_cliente, 
+    pr.nombre AS nombre_producto, 
+    p.cantidad, 
+    pr.precio AS precio_unitario,
+    DATEDIFF(CURDATE(), p.fecha_pedido) AS dias_espera
+FROM pedidos p
+INNER JOIN clientes c ON p.cliente_id = c.cliente_id
+INNER JOIN productos pr ON p.producto_id = pr.producto_id
+WHERE p.estado = 'pendiente';
+
+-- 2. Crear el procedimiento que consulta la vista
+DELIMITER //
+CREATE PROCEDURE sp_alertar_retrasos(p_dias_limite INT)
+BEGIN
+    SELECT * FROM vista_pedidos_pendientes 
+    WHERE dias_espera > p_dias_limite;
+END //
+DELIMITER ;
+
+/*13. Agregue la columna descuento DECIMAL(5,2) DEFAULT 0 a la tabla productos con una restricción CHECK que garantice valores entre 0 y 50.
+Cree la función fn_precio_final(p_producto_id INT) que retorne el precio del producto aplicando su descuento (precio * (1 - descuento/100)).
+Luego escriba una consulta que muestre nombre, precio, descuento y precio_final para los 3 productos con mayor precio_final, usando la función.
+Clausulas requeridas: ALTER TABLE ADD COLUMN CHECK, CREATE FUNCTION con SELECT, SELECT ORDER BY DESC LIMIT 3
+*/
+-- 1. Alterar tabla con columna y restricción CHECK
+ALTER TABLE productos 
+ADD COLUMN descuento DECIMAL(5,2) DEFAULT 0 CHECK (descuento BETWEEN 0 AND 50);
+
+/*Modificar tipo variable - MODIFY. Cambiar nombre variable - CHANGE. Eliminar campo - DROP. Cambiarle nombre a TODO es RENAME*/
+
+-- 2. Crear la función para calcular el precio final
+DELIMITER //
+CREATE FUNCTION fn_precio_final(p_producto_id INT) 
+RETURNS DECIMAL(10,2)
+DETERMINISTIC
+BEGIN
+    DECLARE v_precio_final DECIMAL(10,2);
+    SELECT precio * (1 - descuento/100) INTO v_precio_final
+    FROM productos
+    WHERE producto_id = p_producto_id;
+    RETURN v_precio_final;
+END //
+DELIMITER ;
+
+-- 3. Consulta de los 3 productos más caros usando la función
+SELECT 
+    nombre, 
+    precio, 
+    descuento, 
+    fn_precio_final(producto_id) AS precio_final
+FROM productos
+ORDER BY precio_final DESC
+LIMIT 3;
+
+/*14. Cree el procedimiento sp_registrar_pedido(p_cliente_id INT, p_producto_id INT, p_cantidad INT) que:
+(a) Valide que el cliente exista.
+(b) Valide que el stock sea suficiente.
+(c) Inserte el pedido con estado pendiente.
+(d) Actualice el stock descontando la cantidad.
+(e) Retorne con un SELECT JOIN el pedido recién creado con nombre del cliente y nombre del producto.
+Clausulas requeridas: CREATE PROCEDURE, SELECT INTO var para validar, IF, INSERT, UPDATE, SELECT con JOIN al final
+*/
+DELIMITER //
+CREATE PROCEDURE sp_registrar_pedido(
+    p_cliente_id INT, 
+    p_producto_id INT, 
+    p_cantidad INT
+)
+BEGIN
+    DECLARE v_existe_cliente INT;
+    DECLARE v_stock_actual INT;
+    DECLARE v_nuevo_id INT;
+
+    -- (a) Validar cliente
+    SELECT COUNT(*) INTO v_existe_cliente FROM clientes WHERE cliente_id = p_cliente_id;
+    
+    -- (b) Validar stock
+    SELECT stock INTO v_stock_actual FROM productos WHERE producto_id = p_producto_id;
+
+    IF v_existe_cliente > 0 AND v_stock_actual >= p_cantidad THEN
+        -- (c) Insertar pedido
+        INSERT INTO pedidos (cliente_id, producto_id, cantidad, fecha_pedido, estado)
+        VALUES (p_cliente_id, p_producto_id, p_cantidad, CURDATE(), 'pendiente');
+        
+        SET v_nuevo_id = LAST_INSERT_ID();
+
+        -- (d) Actualizar stock
+        UPDATE productos 
+        SET stock = stock - p_cantidad 
+        WHERE producto_id = p_producto_id;
+
+        -- (e) Retorno con JOIN
+        SELECT 
+            p.pedido_id, 
+            c.nombre AS nombre_cliente, 
+            pr.nombre AS nombre_producto, 
+            p.cantidad, 
+            p.estado
+        FROM pedidos p
+        INNER JOIN clientes c ON p.cliente_id = c.cliente_id
+        INNER JOIN productos pr ON p.producto_id = pr.producto_id
+        WHERE p.pedido_id = v_nuevo_id;
+    ELSE
+        SELECT 'Error: Cliente no existe o Stock insuficiente' AS mensaje_error;
+    END IF;
+END //
+DELIMITER ;
+
+/*15. Cree la funcion fn_clasificar_producto(p_producto_id INT) que retorne:
+PREMIUM si el precio > 1,000,000; ESTANDAR si esta entre 200,000 y 1,000,000; BASICO si es menor a 200,000.
+Luego cree la vista vista_catalogo_clasificado que muestre nombre, categoria, precio, clasificacion (usando la funcion) y stock para todos los productos.
+Finalmente, consulte la vista mostrando solo los productos PREMIUM con stock > 5.
+Clausulas requeridas: CREATE FUNCTION con CASE, CREATE VIEW usando la función, SELECT FROM vista con WHERE compuesto
+*/
+
+-- 1. Crear función con CASE
+DELIMITER //
+CREATE FUNCTION fn_clasificar_producto(p_producto_id INT) 
+RETURNS VARCHAR(20)
+DETERMINISTIC
+BEGIN
+    DECLARE v_precio DECIMAL(10,2);
+    DECLARE v_clasificacion VARCHAR(20);
+    
+    SELECT precio INTO v_precio FROM productos WHERE producto_id = p_producto_id;
+    
+    SET v_clasificacion = CASE 
+        WHEN v_precio > 1000000 THEN 'PREMIUM'
+        WHEN v_precio BETWEEN 200000 AND 1000000 THEN 'ESTANDAR'
+        ELSE 'BASICO'
+    END;
+    
+    RETURN v_clasificacion;
+END //
+DELIMITER ;
+
+-- 2. Crear vista usando la función
+CREATE OR REPLACE VIEW vista_catalogo_clasificado AS
+SELECT 
+    nombre, 
+    categoria, 
+    precio, 
+    fn_clasificar_producto(producto_id) AS clasificacion, 
+    stock
+FROM productos;
+
+-- 3. Consulta con WHERE compuesto
+SELECT * FROM vista_catalogo_clasificado
+WHERE clasificacion = 'PREMIUM' AND stock > 5;
+
+/*16. Cree la vista vista_clientes_vip que contenga el cliente_id, nombre, ciudad y total_pedidos_entregados de clientes que hayan realizado mas pedidos entregados que el promedio de pedidos entregados por cliente
+(use subconsulta en el HAVING). 
+Luego escriba una consulta sobre esa vista junto con un JOIN a pedidos y productos para listar el detalle de los últimos 2 pedidos de cada cliente VIP, mostrando nombre del cliente, nombre del producto y fecha_pedido.
+Clausulas requeridas: CREATE VIEW con HAVING > subconsulta AVG, SELECT con JOIN y subconsulta o RANK/ROW_NUMBER
+*/
+CREATE OR REPLACE VIEW vista_clientes_vip as 
+SELECT p.cliente_id, c.nombre, c.ciudad, COUNT(pedido_id) AS total_pedidos_entregados
+from pedidos p
+INNER JOIN clientes c ON p.cliente_id = c.cliente_id
+WHERE estado = 'entregado'
+GROUP BY cliente_id
+HAVING total_pedidos_entregados >
+	(SELECT AVG(total_pedidos_entregados)
+	FROM	
+		(SELECT cliente_id, COUNT(pedido_id) AS total_pedidos_entregados
+		from pedidos
+        WHERE estado = 'entregado'
+		GROUP BY cliente_id) as promedio);
+
+	/*Imagina que tienes una fila de pedidos esperando. ROW_NUMBER es como ponerle un número en la caja a cada pedido.
+    PARTITION BY cliente_id: Significa: "Cada vez que cambie el cliente, vuelve a empezar a contar desde 1". Es como hacer filas separadas por cliente.
+    ORDER BY fecha_pedido DESC: Significa: "Ponle el número 1 al pedido más reciente (el último)".*/
+SELECT cliente, producto, fecha
+FROM (
+	SELECT v.nombre as cliente, pr.nombre as producto, pe.fecha_pedido as fecha,
+			ROW_NUMBER() OVER(PARTITION BY v.cliente_id ORDER BY pe.fecha_pedido DESC) as RowNumber
+	FROM vista_clientes_vip v
+	INNER JOIN pedidos pe ON v.cliente_id = pe.cliente_id
+	INNER JOIN productos pr ON pe.producto_id = pr.producto_id) as ranking
+WHERE RowNumber <= 2; # aka solo los últimos 2 yayayaya
