@@ -233,3 +233,39 @@ END //
 DELIMITER ;
 
 SELECT nombre, stock FROM productos WHERE fn_stock_suficiente(producto_id, 5) = 0;
+
+/*10. Cree el procedimiento sp_actualizar_estado_pedido(p_pedido_id INT, p_nuevo_estado VARCHAR(20)) que:
+(a) Verifique que el pedido exista (si no, retorne mensaje de error).
+(b) Inserte un registro en log_cambios_estado con el estado anterior y el nuevo.
+(c) Actualice el estado del pedido.
+(d) Si el nuevo estado es cancelado, restaure el stock del producto correspondiente.
+Clausula requeridas: CREATE PROCEDURE, SELECT INTO var, IF/ELSE, INSERT, UPDATE dos tablas*/
+
+DELIMITER //
+CREATE PROCEDURE sp_actualizar_estado_pedido(
+	IN p_pedido_id INT,
+	IN p_nuevo_estado VARCHAR(20),
+	OUT p_mensaje VARCHAR(100)
+)
+BEGIN
+	DECLARE v_estado VARCHAR(20);
+	DECLARE v_pedido_id INT;
+	
+	DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        ROLLBACK;
+        SET p_mensaje = 'Error detectado: transacción revertida';
+        SET p_idPedido = -1; # placeholder
+    END;
+
+	SELECT pedido_id INTO v_pedido_id
+	FROM pedidos WHERE pedido_id = p_pedido_id;
+
+	IF v_pedido_id IS NULL THEN
+		SET p_mensaje = 'Error: Pedido no encontrado :/';
+	END IF;
+	--  (log_id PK AI, pedido_id FK, estado_anterior VARCHAR(20), estado_nuevo VARCHAR(20), fecha_cambio DATETIME DEFAULT NOW())
+	INSERT INTO log_cambios_estado (pedido_id) VALUES (p_pedido_id)
+
+END //
+DELIMITER ;
