@@ -82,3 +82,8 @@ ej: db.usuario.find({estadoUsuario: {$in : ["activo","inactivo"]}})
 db.[collection].find({propiedad: {$operador1:'valor1',$operador2:'valor2'}})
 
 ej: db.trabajador.find({documentoTrabajador: {$gte:1000000000,$lte:2000000000}})
+
+/*ACTUALIZAR DOCUMENTO*/
+ej: db.productos.updateMany(
+  {},[{$set: {total: {$multiply: ["$precioUnit","$cantidad"]}}}]
+)
