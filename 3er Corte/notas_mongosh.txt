@@ -1,0 +1,43 @@
+/*Notas de clase sobre mongosh - 4 de mayo de 2026
+Principalmente solo copiare lo que escribamos en el CLI pero yeah
+
+Acá se incluyen estructuras de cosas básicas por hacer dentro de MongoDB
+En mi mongosh si estoy haciendo la creación de la base de datos de TGI.
+
+tener en cuenta que no todas son entradas. por ejemplo "use" es algo que yo escribí pero "switched to..." no...
+*/
+
+// Crear DB:
+use sst_tgi_cli 
+switched to db sst_tgi_cli
+
+// verificar que todo salio bien
+db
+sst_tgi_cli
+
+// crear colección (todas se escriben en minúscula)
+db.createCollection("{nombre}")
+// esto es lo que hago para cada una de las colecciones de la base de datos
+
+ej: db.createCollection("responsable")
+
+// mostrar las bases de datos
+show dbs
+
+// mostrar las colecciones
+show collections
+
+// crear un documento en una colección
+db.[collection].insertOne({"propiedad_1":"valor",...,"propiedad_n":"valor"})
+
+ej: db.usuario.insertOne({nombreUsuario:"Don Pepe",rolUsuario:"admin",correoUsuario:"don.pepe@tgi.com.co",contrasenaUsuario:"laVerdadNoSe21",estadoUsuario:"activo"})
+
+// crear muchos documentos en una colección (se usan [] para decir que es un arreglo de documentos aka varios objetos)
+db.[collection].insertMany([{"propiedad_1":"valor",...,"propiedad_n":"valor"},{"propiedad_1":"valor",...,"propiedad_n":"valor"}])
+
+ej: db.cargo.insertMany([{nombreCargo:"Procurador general de la nación"},{nombreCargo:"Celador de aquí la esquina"}])
+
+// consultar documentos creados
+db.[collection].find().pretty()
+
+ej: db.capacitacion.find().pretty()
