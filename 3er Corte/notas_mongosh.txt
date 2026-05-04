@@ -27,6 +27,8 @@ show dbs
 // mostrar las colecciones
 show collections
 
+/*CREAR DOCUMENTOS*/
+
 // crear un documento en una colección
 db.[collection].insertOne({"propiedad_1":"valor",...,"propiedad_n":"valor"})
 
@@ -41,3 +43,42 @@ ej: db.cargo.insertMany([{nombreCargo:"Procurador general de la nación"},{nombr
 db.[collection].find().pretty()
 
 ej: db.capacitacion.find().pretty()
+
+/*CONSULTAR DOCUMENTOS*/
+
+// buscar un documento (solo 1)
+db.[collection].findOne({propiedad:'match'})
+
+// buscar muchos documentos
+db.[collection].find({propiedad:'match'})
+
+ej: db.trabajador.find({empresaDondeTrabaja:'TGI'})
+
+// usar operadores como AND
+db.[collection].find({
+  $and: [
+    {propiedad:'valor'},
+    {otrapropiedad: 'valor2'}
+  ]
+})
+
+ej: db.trabajador.find({
+  $and: [{empresaDondeTrabaja:'TGI'},
+  {nombreTrabajador:'Dayro Castellanos Sanchez'}
+  ]})
+
+Lo mismo para los otros operadores: $or, etc.
+LOS OPERADORES SIEMPRE VAN ENTRE CORCHETES
+
+// forma alternativa de usar los operadores
+db.[collection].find({propiedad: {$operador: 'valor'}})
+
+ej: db.trabajador.find({empresaDondeTrabaja: {$ne: 'TGI'}})
+
+ej: db.usuario.find({estadoUsuario: {$in : ["activo","inactivo"]}})
+
+// CONSULTA IMPLÍCITA
+// Para varias condiciones a la vez
+db.[collection].find({propiedad: {$operador1:'valor1',$operador2:'valor2'}})
+
+ej: db.trabajador.find({documentoTrabajador: {$gte:1000000000,$lte:2000000000}})
