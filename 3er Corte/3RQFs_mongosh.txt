@@ -1,0 +1,30 @@
+/*Este es el lugar donde escribiré los comandos para mongosh de tres de nuestros requisitos...
+Del maravilloso proyecto de capacitaciones de TGI.
+*/
+
+// RQF-005: Modificar rol de Usuario
+
+db.usuario.updateOne(
+  { nombreUsuario: "Don Pepe"},
+  {$set: {rolUsuario: "ayudante"}}
+)
+
+// RQF-006: Modificar estado de Usuario
+
+db.usuario.updateOne(
+  { nombreUsuario: "Don Pepe"},
+  {$set: {estadoUsuario: "inactivo"}}
+)
+
+// RQF-045: Registrar asistencia a capacitación
+
+db.asistencia.updateOne(
+  { idProgramacionFK: 1, idTrabajadorFK: 1, asistio: false },
+  {$set: {asistio: true, 
+          evaluacionCapacitador: 5, 
+          comentariosCapacitacion: "Estuvo ok"},
+   $currentdate: { fechaDeAsistencia: true }
+  }
+)
+
+// Nota para el futuro: El segundo {} del update es para pasarle muchas instrucciones, $set es apenas una de ellas.
