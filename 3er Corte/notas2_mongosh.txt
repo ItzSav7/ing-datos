@@ -1,0 +1,32 @@
+/*Holaa estas son mis notas de clase del 06 de mayo del 2026*/
+
+// Ejecutar múltiples operaciones. Operaciones mezcladas
+
+db.[collection].bulkWrite(
+  [
+    {insertOne: {document: {...}}},
+    {insertMany: {document: {...}}},
+    ...
+    {operación n}
+  ]
+)
+
+/* Subdocumentos: Similar a las subconsultas
+   Documentos anidados: Embeddings*/
+
+db.[collection].insertOne(
+  {
+    propiedad1: "valor1",
+    propiedad2: "valor 2",
+    ...
+    subdocumento: { // Es decentemente similar a una FK
+        subpropiedad1: "subvalor1"
+        ...
+    } 
+  }
+)
+
+// LO IMPORTANTE es que con esta vuelta, si creas cada documento con un subdocumento, pueden haber duplicados. Aka, si tienes un subdocumento "cliente" e insertas a ese cliente como subdocumento por cada pedido, el cliente quedará registrado n veces.
+// Es decir, en este ejemplo no tendría que haber una colección 'cliente'
+
+// O sea no es tan útil pero se puede. Lo que si son las verdaderas FK son las agregaciones.
