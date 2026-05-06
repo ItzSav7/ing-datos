@@ -10,45 +10,93 @@ db.createCollection("bands")
 
 db.bands.insertOne(
   {	name: "My Chemical Romance",
-  	country: "EE.UU."
+  	country: "EE.UU.",
 		albums: [
       {title: "Three Cheers For Sweet Revenge",
-      dateCreated: 2004
+      dateCreated: 2004,
       songs: [
-    		{titleSong: "Helena"
-        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+    		{titleSong: "Helena",
+        	autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
   			duration: 3},
-        {titleSong: "Give 'Em Hell, Kid"
-        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+	        {titleSong: "Give 'Em Hell, Kid",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
   			duration: 2},
-        {titleSong: "You Know What They Do To Guys Like Us In Prison"
-        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
-  			duration: 2},
-        {titleSong: "I'm Not Ok"
-        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+			{titleSong: "To The End",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
   			duration: 3},
-        {titleSong: "The Ghost Of You"
-        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+	        {titleSong: "You Know What They Do To Guys Like Us In Prison",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 2},
+	        {titleSong: "I'm Not Ok (I Promise)",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 3},
+	        {titleSong: "The Ghost Of You",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 3},
+			{titleSong: "The Jetset Life Is Gonna Kill You",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 3},
+			{titleSong: "Interlude",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 3},
+			{titleSong: "Thank You For The Venom",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 3},
+			{titleSong: "Hang 'Em High",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 3},
+			{titleSong: "It's Not a Fashion Statement, It's a Fucking Deathwish",	
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 3},
+			{titleSong: "Cemetery Drive",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 3},
+			{titleSong: "I Never Told You What I Do for a Living",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
   			duration: 3}
       ]},
   		{title: "The Black Parade",
-      dateCreated: 2004
+      dateCreated: 2004,
       songs: [
-    		{titleSong: "The End."
-        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+    		{titleSong: "The End.",
+        	autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
   			duration: 1},
-        {titleSong: "Dead!"
-        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+	        {titleSong: "Dead!",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
   			duration: 3},
-        {titleSong: "This Is How I Disappear"
-        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+	        {titleSong: "This Is How I Disappear",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
   			duration: 4},
-        {titleSong: "The Sharpest Lives"
-        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+	        {titleSong: "The Sharpest Lives",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
   			duration: 3},
-        {titleSong: "Welcome To The Black Parade"
-        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
-  			duration: 5}
+	        {titleSong: "Welcome To The Black Parade",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 5},
+			{titleSong: "I Don't Love You",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 4},
+			{titleSong: "House of Wolves",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 4},
+			{titleSong: "Cancer",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 4},
+			{titleSong: "Mama",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 4},
+			{titleSong: "Sleep",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 4},
+			{titleSong: "Teenagers",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 4},
+			{titleSong: "Disenchanted",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 4},
+			{titleSong: "Famous Last Words",
+	        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"],
+  			duration: 4}
       ]},
     ]
   }
@@ -62,39 +110,90 @@ db.bands.insertOne(
       dateCreated: 2018,
       songs: [
     		{titleSong: "Jumpsuit",
-        autor: ["Tyler Joseph, Josh Dun"],
+	        autor: ["Tyler Joseph, Josh Dun"],
   			duration: 3},
-        {titleSong: "Levitate",
-        autor: ["Tyler Joseph, Josh Dun"],
+	        {titleSong: "Levitate",
+	        autor: ["Tyler Joseph, Josh Dun"],
   			duration: 2},
-        {titleSong: "Morph",
-        autor: ["Tyler Joseph, Josh Dun"],
+	        {titleSong: "Morph",
+	        autor: ["Tyler Joseph, Josh Dun"],
   			duration: 3},
-        {titleSong: "My Blood",
-        autor: ["Tyler Joseph, Josh Dun"],
+	        {titleSong: "My Blood",
+	        autor: ["Tyler Joseph, Josh Dun"],
   			duration: 4},
-        {titleSong: "Chlorine",
-        autor: ["Tyler Joseph, Josh Dun"],
-  			duration: 5}]
-      },
+	        {titleSong: "Chlorine",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 5},
+			{titleSong: "Smithereens",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 3},
+			{titleSong: "Neon Gravestones",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 3},
+			{titleSong: "The Hype",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 3},
+			{titleSong: "Nico and the Niners",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 3},
+			{titleSong: "Cut My Lip",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 3},
+			{titleSong: "Bandito",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 3},
+			{titleSong: "Pet Cheetah",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 3},
+			{titleSong: "Legend",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 3},
+			{titleSong: "Leave the City",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 3}
+      ]},
   		{title: "Breach",
       dateCreated: 2025,
       songs: [
     		{titleSong: "City Walls",
-        autor: ["Tyler Joseph, Josh Dun"],
+        	autor: ["Tyler Joseph, Josh Dun"],
   			duration: 6},
-        {titleSong: "RAWFEAR",
-        autor: ["Tyler Joseph, Josh Dun"],
+	        {titleSong: "RAWFEAR",
+	        autor: ["Tyler Joseph, Josh Dun"],
   			duration: 2},
-        {titleSong: "Center Mass",
-        autor: ["Tyler Joseph, Josh Dun"],
+			{titleSong: "Drum Show",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 2},
+			{titleSong: "Garbage",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 2},
+			{titleSong: "The Contract",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 2},
+			{titleSong: "Downstairs",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 2},
+			{titleSong: "Robot Voices",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 2},
+	        {titleSong: "Center Mass",
+	        autor: ["Tyler Joseph, Josh Dun"],
   			duration: 4},
-        {titleSong: "Cottonwood",
-        autor: ["Tyler Joseph, Josh Dun"],
+	        {titleSong: "Cottonwood",
+	        autor: ["Tyler Joseph, Josh Dun"],
   			duration: 3},
-        {titleSong: "One Way",
-        autor: ["Tyler Joseph, Josh Dun"],
-  			duration: 3}]
+	        {titleSong: "One Way",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 3},
+			{titleSong: "Days Lie Dormant",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 2},
+			{titleSong: "Tally",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 2},
+			{titleSong: "Intentions",
+	        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 2}]
 			}]
   }
 )
@@ -238,6 +337,11 @@ db.bands.insertOne(
 db.bands.find().pretty()
 
 /*5. Borrar un campo del subdocumento albums (a elección)*/
-db.bands.updateMany({}, { $unset: {"albums.dateCreated" : ""}})
+db.bands.updateMany({}, {$unset: {"albums.$[].dateCreated" : ""}})
 
 /*6. Borrar todo el subdocumento songs de uno de los albums de una banda (a elección)*/
+db.bands.updateOne({name: 'Nicolás y Los Fumadores', "albums.title": "Nochenegra"}, 
+                   {$unset: {"albums.$.songs": ""}})
+
+/*Notas: $unset es para eliminar un campo, $[] es para acceder a todos los elementos de un array, $ es "el primero que encuentre que matches el filtro"
+Pensaba que se necesitaría $pull pero eso lo que hace es trabajar dentro de un arreglo.*/
