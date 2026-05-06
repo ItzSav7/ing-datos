@@ -4,6 +4,10 @@ db
 
 db.createCollection("bands")
 
+/*1. Agregar a la base de datos 5 bandas (datos libres)
+2. Agregar a cada banda mínimo 2 albums musicales de su discografía (subdocumento)
+3. Agregar a cada álbum mínimo 5 canciones (subdocumento songs*/
+
 db.bands.insertOne(
   {	name: "My Chemical Romance",
   	country: "EE.UU."
@@ -229,3 +233,11 @@ db.bands.insertOne(
 			}]
   }
 )
+
+/*4. Mostrar cada banda completa con su discografía relacionada*/
+db.bands.find().pretty()
+
+/*5. Borrar un campo del subdocumento albums (a elección)*/
+db.bands.updateMany({}, { $unset: {"albums.dateCreated" : ""}})
+
+/*6. Borrar todo el subdocumento songs de uno de los albums de una banda (a elección)*/
