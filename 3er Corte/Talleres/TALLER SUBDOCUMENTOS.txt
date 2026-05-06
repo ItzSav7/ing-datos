@@ -1,0 +1,231 @@
+use rockband
+
+db
+
+db.createCollection("bands")
+
+db.bands.insertOne(
+  {	name: "My Chemical Romance",
+  	country: "EE.UU."
+		albums: [
+      {title: "Three Cheers For Sweet Revenge",
+      dateCreated: 2004
+      songs: [
+    		{titleSong: "Helena"
+        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+  			duration: 3},
+        {titleSong: "Give 'Em Hell, Kid"
+        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+  			duration: 2},
+        {titleSong: "You Know What They Do To Guys Like Us In Prison"
+        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+  			duration: 2},
+        {titleSong: "I'm Not Ok"
+        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+  			duration: 3},
+        {titleSong: "The Ghost Of You"
+        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+  			duration: 3}
+      ]},
+  		{title: "The Black Parade",
+      dateCreated: 2004
+      songs: [
+    		{titleSong: "The End."
+        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+  			duration: 1},
+        {titleSong: "Dead!"
+        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+  			duration: 3},
+        {titleSong: "This Is How I Disappear"
+        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+  			duration: 4},
+        {titleSong: "The Sharpest Lives"
+        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+  			duration: 3},
+        {titleSong: "Welcome To The Black Parade"
+        autor: ["Gerard Way", "Mikey Way", "Frank Iero", "Ray Toro"]
+  			duration: 5}
+      ]},
+    ]
+  }
+)
+
+db.bands.insertOne(
+  {	name: "Twenty One Pilots",
+  	country: "EE.UU.",
+		albums: [
+      {title: "Trench",
+      dateCreated: 2018,
+      songs: [
+    		{titleSong: "Jumpsuit",
+        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 3},
+        {titleSong: "Levitate",
+        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 2},
+        {titleSong: "Morph",
+        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 3},
+        {titleSong: "My Blood",
+        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 4},
+        {titleSong: "Chlorine",
+        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 5}]
+      },
+  		{title: "Breach",
+      dateCreated: 2025,
+      songs: [
+    		{titleSong: "City Walls",
+        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 6},
+        {titleSong: "RAWFEAR",
+        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 2},
+        {titleSong: "Center Mass",
+        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 4},
+        {titleSong: "Cottonwood",
+        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 3},
+        {titleSong: "One Way",
+        autor: ["Tyler Joseph, Josh Dun"],
+  			duration: 3}]
+			}]
+  }
+)
+
+db.bands.insertOne(
+  {	name: "Pierce The Veil",
+  	country: "EE.UU.",
+		albums: [
+      {title: "Collide With The Sky",
+      dateCreated: 2012,
+      songs: [
+    		{titleSong: "May These Noises Startle You In Your Sleep",
+        autor: ["Vic Fuentes", "Mike Fuentes", "Tony Perry", "Jaime Preciado"],
+  			duration: 2},
+        {titleSong: "Hell Above",
+        autor: ["Vic Fuentes", "Mike Fuentes", "Tony Perry", "Jaime Preciado"],
+  			duration: 3},
+        {titleSong: "A Match Into Water",
+        autor: ["Vic Fuentes", "Mike Fuentes", "Tony Perry", "Jaime Preciado"],
+  			duration: 3},
+        {titleSong: "King For A Day",
+        autor: ["Vic Fuentes", "Mike Fuentes", "Tony Perry", "Jaime Preciado"],
+  			duration: 4},
+        {titleSong: "Bulls In The Bronx",
+        autor: ["Vic Fuentes", "Mike Fuentes", "Tony Perry", "Jaime Preciado"],
+  			duration: 4}]
+      },
+  		{title: "A Flair For The Dramatic",
+      dateCreated: 2025,
+      songs: [
+    		{titleSong: "Chemical Kids and Mechanical Brides",
+        autor: ["Vic Fuentes", "Mike Fuentes", "Tony Perry", "Jaime Preciado"],
+  			duration: 3},
+        {titleSong: "Currents Convulsive",
+        autor: ["Vic Fuentes", "Mike Fuentes", "Tony Perry", "Jaime Preciado"],
+  			duration: 2},
+        {titleSong: "Yeah Boy and Doll Face",
+        autor: ["Vic Fuentes", "Mike Fuentes", "Tony Perry", "Jaime Preciado"],
+  			duration: 4},
+        {titleSong: "I'd Rather Die Than Be Famous",
+        autor: ["Vic Fuentes", "Mike Fuentes", "Tony Perry", "Jaime Preciado"],
+  			duration: 3},
+        {titleSong: "She Sings in the Morning",
+        autor: ["Vic Fuentes", "Mike Fuentes", "Tony Perry", "Jaime Preciado"],
+  			duration: 4}]
+			}]
+  }
+)
+
+db.bands.insertOne(
+  {	name: "Paramore",
+  	country: "EE.UU.",
+		albums: [
+      {title: "Riot!",
+      dateCreated: 2007,
+      songs: [
+    		{titleSong: "For a Pessimist, I'm Pretty Optimistic",
+        autor: ["Hayley Williams"],
+  			duration: 2},
+        {titleSong: "That's what you get",
+        autor: ["Hayley Williams"],
+  			duration: 3},
+        {titleSong: "Hallelujah",
+        autor: ["Hayley Williams"],
+  			duration: 3},
+        {titleSong: "Misery Business",
+        autor: ["Hayley Williams"],
+  			duration: 4},
+        {titleSong: "Let the Flames Begin",
+        autor: ["Hayley Williams"],
+  			duration: 4}]
+      },
+  		{title: "After Laughter",
+      dateCreated: 2017,
+      songs: [
+    		{titleSong: "Hard Times",
+        autor: ["Hayley Williams"],
+  			duration: 3},
+        {titleSong: "Rose-Colored Boy",
+        autor: ["Hayley Williams"],
+  			duration: 2},
+        {titleSong: "Told You So",
+        autor: ["Hayley Williams"],
+  			duration: 4},
+        {titleSong: "Forgiveness",
+        autor: ["Hayley Williams"],
+  			duration: 3},
+        {titleSong: "Fake Happy",
+        autor: ["Hayley Williams"],
+  			duration: 4}]
+			}]
+  }
+)
+
+db.bands.insertOne(
+  {	name: "Nicolás y Los Fumadores",
+  	country: "Colombia",
+		albums: [
+      {title: "Dios y La Mata de Lulo, o ¿que hacer en caso de que haya perdido la luz?",
+      dateCreated: 2022,
+      songs: [
+    		{titleSong: "Dios y La Mata de Lulo (Instrumental)",
+        autor: ["Santiago García, Juan Carlos Sánchez, Nicolás Correa, Luis Torres"],
+  			duration: 2},
+        {titleSong: "El Sol",
+        autor: ["Santiago García, Juan Carlos Sánchez, Nicolás Correa, Luis Torres"],
+  			duration: 11},
+        {titleSong: "El Verano",
+        autor: ["Santiago García, Juan Carlos Sánchez, Nicolás Correa, Luis Torres"],
+  			duration: 3},
+        {titleSong: "La Lluvia",
+        autor: ["Santiago García, Juan Carlos Sánchez, Nicolás Correa, Luis Torres"],
+  			duration: 4},
+        {titleSong: "El Túnel",
+        autor: ["Santiago García, Juan Carlos Sánchez, Nicolás Correa, Luis Torres"],
+  			duration: 4}]
+      },
+  		{title: "Nochenegra",
+      dateCreated: 2025,
+      songs: [
+    		{titleSong: "Todas las cosas en mis manos",
+        autor: ["Santiago García, Juan Carlos Sánchez, Nicolás Correa, Luis Torres"],
+  			duration: 3},
+        {titleSong: "El adversario",
+        autor: ["Santiago García, Juan Carlos Sánchez, Nicolás Correa, Luis Torres"],
+  			duration: 2},
+        {titleSong: "Piedra sobre piedra",
+        autor: ["Santiago García, Juan Carlos Sánchez, Nicolás Correa, Luis Torres"],
+  			duration: 4},
+        {titleSong: "Nocturno",
+        autor: ["Santiago García, Juan Carlos Sánchez, Nicolás Correa, Luis Torres"],
+  			duration: 3},
+        {titleSong: "Misterio Resuelto",
+        autor: ["Santiago García, Juan Carlos Sánchez, Nicolás Correa, Luis Torres"],
+  			duration: 4}]
+			}]
+  }
+)
