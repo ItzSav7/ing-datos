@@ -19,7 +19,7 @@ db.[collection].insertOne(
     propiedad1: "valor1",
     propiedad2: "valor 2",
     ...
-    subdocumento: { // Es decentemente similar a una FK
+    propiedadn: { // Es decentemente similar a una FK
         subpropiedad1: "subvalor1"
         ...
     } 
@@ -30,3 +30,37 @@ db.[collection].insertOne(
 // Es decir, en este ejemplo no tendría que haber una colección 'cliente'
 
 // O sea no es tan útil pero se puede. Lo que si son las verdaderas FK son las agregaciones.
+// La regla general es: Los subdocumentos son de cosas que HACEN PARTE del documento. Las agregaciones no.
+// Los subdocumentos podrían ser una 'tabla' de SQL de por si, pero es mejor no.
+
+// Consultas a subdocumentos
+
+db.[collection].find(
+  {propiedadn.subpropiedad1: "subvalor1"}
+)
+
+ej: db.pedidos.find({
+  "envio.metodo": "express",
+  "envio.costo": {$lte: 20000}
+})
+
+// Es decir, se usa el operador '.' para entrar en las propiedades del subdocumento. Bastante similar a como se haría en Java o en C++ con atributos de un objeto.
+// Así, tipo {"campo.subcampo": {...}}, y usar la ',' como un 'y'.
+
+/*Aggregation Pipeline: "Es como cuando uno va al supermercado y llevo un carrito"
+Agrego cosas que no pertenecen a la colección en sí. Por ejemplo, los productos vienen de un stock y se agregan a un carrito. Los productos no pertenecen al carrito, pero se necesita agregar productos al carrito.*/
+
+/*CREAR AGREGACIONES*/
+// Es como un JOIN, no se guarda en ningún lado.
+// collection.quepropiedad
+db.[collection].aggregate(
+  [
+    {$match: {/*filtros*/}},
+    {$group: {/*agrupacion*/}},
+    ...
+    {$limit: /*número*/}
+  ]
+)
+
+// $unwind
+// $sort -> 1 = ASC, -1 = DESC.
