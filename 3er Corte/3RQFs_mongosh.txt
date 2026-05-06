@@ -2,6 +2,8 @@
 Del maravilloso proyecto de capacitaciones de TGI.
 */
 
+use sst_tgi
+
 // RQF-005: Modificar rol de Usuario
 
 db.usuario.updateOne(
@@ -16,6 +18,9 @@ db.usuario.updateOne(
   {$set: {estadoUsuario: "inactivo"}}
 )
 
+// Para retificar que los anteriores 2 RQFs corrieron bien:
+db.usuario.findOne({nombreUsuario: "Don Pepe"})
+
 // RQF-045: Registrar asistencia a capacitación
 
 db.asistencia.updateOne(
@@ -23,8 +28,10 @@ db.asistencia.updateOne(
   {$set: {asistio: true, 
           evaluacionCapacitador: 5, 
           comentariosCapacitacion: "Estuvo ok"},
-   $currentdate: { fechaDeAsistencia: true }
+   $currentDate: { fechaDeAsistencia: true }
   }
 )
+
+db.asistencia.findOne({idProgramacionFK: 1, idTrabajadorFK: 1})
 
 // Nota para el futuro: El segundo {} del update es para pasarle muchas instrucciones, $set es apenas una de ellas.
